@@ -1,6 +1,7 @@
 @import "boostrap-custom";
 @import "bootstrap";
 
+
 .form-text {
   padding-top: $padding-base-vertical+1px;
   border-color: $input-bg!important;
@@ -21,3 +22,20 @@
   from { -webkit-transform: rotate(0deg);}
   to { -webkit-transform: rotate(360deg);}
 }
+
+#logo {
+    width: 100px;
+    height: 150px;
+    position: absolute;
+    left: 0%;
+    top: 40%; 
+    margin-left: 0px;
+    margin-top: -46px;
+    z-index: 6;
+    }
+
+    #navigation {
+    position: right;
+    height: 0px;
+    }
+

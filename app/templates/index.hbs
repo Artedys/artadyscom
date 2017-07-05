@@ -1,5 +1,401 @@
-<h2 id="title">Home Page</h2>
+<style>
+    body {
+        background-color: cadetblue;
+        overflow-y: scroll;
+    }
 
-<button {{action "generateDummyList"}} class="btn btn-info">Generate 5 random record</button>
-<button {{action "deleteAll"}} class="btn btn-danger">Delete All</button>
-<p>Size: {{model.length}}</p>
+</style>
+
+<style>
+#geocoder-container > div {
+    min-width:25%;
+    margin-left:5%;
+}
+</style>
+
+
+<style>
+    #map
+    {
+    width: 100% !important;
+    height: 470px !important;
+    position: absolute;
+    display:inline-block;
+    
+   
+    }
+</style>
+
+<style>
+    #map1
+    {
+    width: 100% !important;
+    height: 470px !important;
+    position: absolute;
+    display:inline-block;
+   
+    }
+</style>
+
+<style>
+    #map2
+    {
+    width: 100% !important;
+    height: 560px !important;
+    position: absolute;
+    display:inline-block;
+   
+    }
+</style>
+
+<style>
+     #menu3 {
+        position: absolute;
+        background: transparent;
+        padding: 10px;
+        font-family: 'Open Sans', sans-serif;
+        color: blue;
+        -webkit-animation: mymove 10s infinite; /* Chrome, Safari, Opera */
+        animation: mymove 10s infinite;
+    }
+
+    /* Chrome, Safari, Opera */
+@-webkit-keyframes mymove {
+    50% {color: white;}
+}
+
+/* Standard syntax */
+@keyframes mymove {
+    50% {color: white;}
+}
+</style>
+
+<body>
+<!-- premier block -->
+
+
+    
+            <div class="center" id='map'></div>
+            <br>
+            <br>
+            <br>
+            <div id='menu3'>
+                <center><h2>ARTADYS Global Neurosciences understand the human mind through neurosciences, imagination, augmented reality, artificial intelligence & computer vision tools.
+                When the subject is the human being, then google, firefox, ibm, bing, yahoo, safari, facebook and others engines give general answers.
+                ARTADYS solved this problem.</h2></center>
+            </div>
+    
+<script>
+    
+mapboxgl.accessToken = 'pk.eyJ1IjoiYXJ0YWR5cyIsImEiOiJjaXc3bmx4dHIwMDEzMnpteWd1ZDN1dHQwIn0.VSQbt4n08Oc4nUGtR5RcWQ';
+
+
+var videoStyle = {
+    "version": 8,
+    "sources": {
+        "satellite": {
+            "type": "raster",
+            "url": "mapbox://mapbox.satellite",
+            "tileSize": 256
+        },
+        "video": {
+            "type": "video",
+            "urls": ["https://www.mapbox.com/drone/video/drone.mp4", "https://www.mapbox.com/drone/video/drone.webm"],
+            "coordinates": [
+                [-122.51596391201019, 37.56238816766053],
+                [-122.51467645168304, 37.56410183312965],
+                [-122.51309394836426, 37.563391708549425],
+                [-122.51423120498657, 37.56161849366671]
+            ]
+        },
+    
+    },
+    "layers": [{
+        "id": "background",
+        "type": "background",
+        "paint": {
+            "background-color": "rgb(4,7,14)"
+        }
+    }, 
+    
+    {
+        "id": "satellite",
+        "type": "raster",
+        "source": "satellite"
+    }, {
+        "id": "video",
+        "type": "raster",
+        "source": "video"
+    }]
+    
+};
+
+if (!mapboxgl.supported()) {
+    alert('Your browser does not support Mapbox GL');
+} else {
+
+var map = new mapboxgl.Map({
+    container: 'map',
+    minZoom: 14,
+    zoom: 17,
+    center: [-122.514426, 37.562984],
+    bearing: -96,
+    style: videoStyle,
+    hash: false
+});
+
+
+var geocoder = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken
+});
+
+map.addControl(geocoder);
+
+// After the map style has loaded on the page, add a source layer and default
+// styling for a single point.
+map.on('load', function() {
+
+
+
+
+
+    
+    map.addSource('single-point', {
+        "type": "geojson",
+        "data": {
+            "type": "FeatureCollection",
+            "features": []
+        }
+    });
+
+    map.addLayer({
+        "id": "point",
+        "source": "single-point",
+        "type": "circle",
+        "paint": {
+            "circle-radius": 10,
+            "circle-color": "#007cbf"
+        }
+    });
+
+
+
+
+
+
+    
+
+    // Listen for the `geocoder.input` event that is triggered when a user
+    // makes a selection and add a symbol that matches the result.
+    geocoder.on('result', function(ev) {
+        map.getSource('single-point').setData(ev.result.geometry);
+    });
+
+map.addControl(new mapboxgl.FullscreenControl());    
+
+// Add geolocate control to the map.
+map.addControl(new mapboxgl.GeolocateControl());
+
+});
+
+}
+
+</script>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+<!-- deuxieme block -->
+
+
+<div class="container-fluide">
+    <style>
+
+         #menu2 {
+        position: absolute;
+        background: transparent;
+        padding: 10px;
+        font-family: 'Open Sans', sans-serif;
+        color: blue;
+        -webkit-animation: mymove 10s infinite; /* Chrome, Safari, Opera */
+        animation: mymove 10s infinite;
+    }
+
+    /* Chrome, Safari, Opera */
+        @-webkit-keyframes mymove {
+            50% {color: white;}
+    }
+
+/* Standard syntax */
+        @keyframes mymove {
+            50% {color: white;}
+    }
+}   
+    </style>
+    <div class="center" id='map1'></div>
+<br>
+<br>
+<br>
+    <div id='menu2'>
+        
+        <center><h2>ARTADYS Global Neurosciences merge the humans by their neural activities - or by their inner dynamic functional connectivity motifs - emotions, personalities, mindshare.</h2></center>
+    </div>
+          
+
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiYXJ0YWR5cyIsImEiOiJjaXc3bmx4dHIwMDEzMnpteWd1ZDN1dHQwIn0.VSQbt4n08Oc4nUGtR5RcWQ';
+var map1 = new mapboxgl.Map({
+container: 'map1',
+style: 'mapbox://styles/mapbox/satellite-streets-v9',
+center: [2.3399, 48.8555],
+});
+
+map1.addControl(new mapboxgl.FullscreenControl());
+
+var direction = 0, manual = false, speed = 1;
+
+// create a GeoJSON point to serve as a starting point
+var point = {
+    "type": "Point",
+    "coordinates": [2.3399, 48.8555]
+};
+
+function setPosition() {
+    point.coordinates[0] += speed * Math.sin(direction) / 100;
+    point.coordinates[1] += speed * Math.cos(direction) / 100;
+    map1.getSource('drone').setData(point);
+
+    map1.setLayoutProperty('drone', 'icon-rotate', direction * (180 / Math.PI));
+
+    if (!manual && Math.random() > 0.95) {
+        direction += (Math.random() - 0.5) / 2;
+    }
+
+    map1.setCenter(point.coordinates);
+}
+
+map1.on('load', function () {
+    // add the GeoJSON above to a new vector tile source
+    map1.addSource('drone', { type: 'geojson', data: point });
+
+    map1.addLayer({
+        "id": "drone-glow-strong",
+        "type": "circle",
+        "source": "drone",
+        "paint": {
+            "circle-radius": 18,
+            "circle-color": "#fff",
+            "circle-opacity": 0.4
+        }
+    });
+
+    map1.addLayer({
+        "id": "drone-glow",
+        "type": "circle",
+        "source": "drone",
+        "paint": {
+            "circle-radius": 40,
+            "circle-color": "#fff",
+            "circle-opacity": 0.1
+        }
+    });
+
+    map1.addLayer({
+        "id": "drone",
+        "type": "symbol",
+        "source": "drone",
+        "layout": {
+            "icon-image": "airport-15",
+            "icon-rotation-alignment": "map"
+        }
+    });
+
+    window.setInterval(setPosition, 10);
+});
+
+// Add manual control of the airplane with left and right arrow keys, just because
+document.body.addEventListener('keydown', function (e) {
+    if (e.which === 37) { // left
+        direction -= 0.1;
+        manual = true;
+    }
+    if (e.which === 39) { // right
+        direction += 0.1;
+        manual = true;
+    }
+    if (e.which === 38) { // faster
+        speed = Math.min(speed + 0.1, 10);
+        manual = true;
+        e.preventDefault();
+    }
+    if (e.which === 40) { // slower
+        speed = Math.max(speed - 0.1, 0);
+        manual = true;
+        e.preventDefault();
+    }
+}, true);
+
+
+
+
+
+
+
+</script>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+<!-- Hotjar Tracking Code for https://artadys.com -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:466785,hjsv:5};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+
+</body>
+
+

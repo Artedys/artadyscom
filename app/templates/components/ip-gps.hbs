@@ -1,0 +1,39 @@
+<style>
+    body {
+        background-color: cadetblue;
+        
+    }
+
+</style>
+
+<style>
+    .form-control{
+        background-color: bisque;
+    }
+
+</style>
+
+<body>
+
+<h2>(feature in construction) ARTADYS Engine track the IP and GPS addresses of internet users</h2>
+<br>
+
+<center><form>
+  <div class="nltk">
+      
+    <label for="url">Please enter an English url / a link (the servers are virtual, so you have to wait 2 minutes for an answer)</label>
+
+       <div class="col-md-6 col-md-offset-4">
+          
+         {{input class='form-control input-lg' placeholder="Enter your English url / link ( example http://confrontations.org/?lang=en )" value=url}}
+        
+         <button class="btn btn-primary" {{action 'ipgpsLookup' }}>Submit</button>
+      
+      </div>
+
+
+  </div>
+</form></center>
+
+</body>
+

@@ -1,0 +1,1110 @@
+<br>
+<style>
+.button2 {
+    background-color: blue; /* Green */
+    color: white;
+    padding: 15px 32px;
+    border-radius: 12px;
+    border: 2px solid #4CAF50; /* Green */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.button2:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+</style>
+
+<style>
+    body {
+        background-color: cadetblue;
+       
+    }
+
+</style>
+
+
+    <style>
+        body { margin:0; padding:0; }
+        #map { position:fluide; top:90; bottom:60; width:100%; }
+    </style>
+
+    <style>
+    #map
+    {
+    width: 100% !important;
+    height: 980px !important;
+    position: absolute;
+    display:inline-block;
+   
+    }
+</style>
+
+  <style>
+        body { margin:0; padding:0; }
+        #map1 { position:fluide; top:90; bottom:60; width:100%; }
+    </style>
+
+    <style>
+    #map1
+    {
+    width: 100% !important;
+    height: 980px !important;
+    position: absolute;
+    display:inline-block;
+   
+    }
+</style>
+
+  <style>
+        body { margin:0; padding:0; }
+        #map2 { position:fluide; top:90; bottom:60; width:100%; }
+    </style>
+
+    <style>
+    #map2
+    {
+    width: 100% !important;
+    height: 980px !important;
+    position: absolute;
+    display:inline-block;
+   
+    }
+</style>
+
+
+<style>
+        body { margin:0; padding:0; }
+        #map3 { position:fluide; top:90; bottom:60; width:100%; }
+    </style>
+
+    <style>
+    #map3
+    {
+    width: 100% !important;
+    height: 980px !important;
+    position: absolute;
+    display:inline-block;
+   
+    }
+</style>
+
+    <style>
+        body { margin:0; padding:0; }
+        #map4 { position:fluide; top:90; bottom:60; width:100%; }
+    </style>
+
+    <style>
+    #map4
+    {
+    width: 100% !important;
+    height: 980px !important;
+    position: absolute;
+    display:inline-block;
+   
+    }
+</style>
+
+
+    <style>
+        body { margin:0; padding:0; }
+        #map5 { position:fluide; top:90; bottom:60; width:100%; }
+    </style>
+
+    <style>
+    #map5
+    {
+    width: 100% !important;
+    height: 980px !important;
+    position: absolute;
+    display:inline-block;
+   
+    }
+</style>
+
+<style>
+    #features {
+        position: relative;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        height: 300px;
+        width: 300px;
+        overflow: auto;
+        background: rgba(255, 255, 255, 0.8);
+    }
+    #map1 canvas {
+        cursor: crosshair;
+    }
+</style>
+
+<style>
+#geocoder-container > div {
+    min-width:50%;
+    margin-left:25%;
+}
+</style>
+
+<body>
+
+<center><h5><b>JOB: fill with clients the café-concerts in the City of Toulouse</b></h5></center>
+<center><h5><b>JOB: sell advertising in the City of Tolouse</b></h5></center>
+
+
+<center><h3><b>Live Services in Cognitive City of Toulouse</b></h3></center>
+<center><h5><b>ARTADYS merge the humans in the City of Toulouse by their inner functionnal dynamic connectivity motifs</b></h5></center>
+
+ <meta charset='utf-8' />
+
+
+<div id='menu'>
+
+    <input id='basic' type='radio' name='rtoggle' value='basic' checked='checked'>
+    <label for='basic'>click here to track the IP and GPS addresses of commerces (café-concerts) in the City of Toulouse</label>
+    <input id='satellite' type='radio' name='rtoggle' value='satellite'>
+    <label for='satellite'>satellite layer </label>
+</div>
+
+
+<div id='map1'></div>
+<pre id='features'></pre>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiYXJ0YWR5cyIsImEiOiJjaXc3bmx4dHIwMDEzMnpteWd1ZDN1dHQwIn0.VSQbt4n08Oc4nUGtR5RcWQ';
+
+var lat = 43.604652;
+
+var lng = 1.4442090000000007;
+
+var map1 = new mapboxgl.Map({
+    container: 'map1',
+    zoom: 15,
+    center: [lng, lat],
+    style: 'mapbox://styles/artadys/cj4kwtsos5et92rpecax6vf3z',
+    hash: true
+});
+
+var layerList = document.getElementById('menu');
+var inputs = layerList.getElementsByTagName('input');
+
+function switchLayer(layer) {
+    var layerId = layer.target.id;
+    map1.setStyle('mapbox://styles/mapbox/' + layerId + '-v9');
+}
+
+for (var i = 0; i &lt; (inputs.length); i++) {
+    inputs[i].onclick = switchLayer;
+}
+
+map1.on('mousemove', function (e) {
+    var features = map1.queryRenderedFeatures(e.point);
+    document.getElementById('features').innerHTML = JSON.stringify(features, null, 2);
+});
+
+var geocoder = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken
+});
+
+map1.addControl(geocoder);
+
+// After the map style has loaded on the page, add a source layer and default
+// styling for a single point.
+map1.on('load', function() {
+    map1.addSource('single-point', {
+        "type": "geojson",
+        "data": {
+            "type": "FeatureCollection",
+            "features": []
+        }
+    });
+
+    map1.addLayer({
+        "id": "point",
+        "source": "single-point",
+        "type": "circle",
+        "paint": {
+            "circle-radius": 10,
+            "circle-color": "#007cbf"
+        }
+    });
+
+    // Listen for the `geocoder.input` event that is triggered when a user
+    // makes a selection and add a symbol that matches the result.
+    geocoder.on('result', function(ev) {
+        map1.getSource('single-point').setData(ev.result.geometry);
+    });
+});
+
+map1.addControl(new mapboxgl.FullscreenControl());
+
+// Add geolocate control to the map.
+map1.addControl(new mapboxgl.GeolocateControl());
+
+
+// Add zoom and rotation controls to the map.
+map1.addControl(new mapboxgl.NavigationControl());
+
+
+
+
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([1.444139199999995, 43.60435589999999])
+    .setHTML('Mairie de Toulouse, France  © ARTADYS')
+    .addTo(map1);
+
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([1.4367635999999493, 43.6067899])
+    .setHTML('Université Toulouse 1 Capitole, © ARTADYS')
+    .addTo(map1);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([1.4962891000000127, 43.5595858])
+    .setHTML('AIRBUS ONEWEB, Toulouse France  © ARTADYS')
+    .addTo(map1);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([1.4868397999999843, 43.5535585])
+    .setHTML('AIRBUS EUROPE, 5 Rue des Satellites, Toulouse France  © ARTADYS')
+    .addTo(map1);
+
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([1.451458914247601, 43.60441137124963])
+    .setHTML('LE CAFE POPULAIRE, 9 rue de la Colombette © ARTADYS')
+    .addTo(map1);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([1.443939948065602, 43.601465653407786])
+    .setHTML('LE CHAMPAGNE, 4 rue Peyras © ARTADYS')
+    .addTo(map1);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([1.436443523124883, 43.603471048928895])
+    .setHTML('LE SAINT DES SEINS, 5 place Saint Pierre © ARTADYS')
+    .addTo(map1);  
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([1.456687140407174, 43.59900787717618])
+    .setHTML('PUERTO HABANA, 12 Port Saint Etienne http://www.puerto-habana.com © ARTADYS')
+    .addTo(map1); 
+
+
+</script>
+
+
+<center>{{lookup-scrap scrapyLookup="scrapyLookup"}}</center>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<center><button class="button button2" {{action 'presseddemo'}}>Click on this button to watch (click again on this button to hide) LIVE or delayed satellite or drone images</button></center>
+
+ {{search-engine}}
+
+{{#if show}}
+
+    {{iss-satellite}}
+
+{{/if}}
+
+<center><h3><b>Cognitive City of San Francisco</b></h3></center>
+<br>
+
+ <meta charset='utf-8' />
+
+
+<div id='map2'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiYXJ0YWR5cyIsImEiOiJjaXc3bmx4dHIwMDEzMnpteWd1ZDN1dHQwIn0.VSQbt4n08Oc4nUGtR5RcWQ';
+
+var map2 = new mapboxgl.Map({
+    container: 'map2',
+    zoom: 16,
+    center: [-122.41941550000001, 37.7749295],
+    style: 'mapbox://styles/mapbox/satellite-v9',
+    hash: false
+});
+
+    map2.addControl(new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken
+            }));
+map2.addControl(new mapboxgl.FullscreenControl());
+
+// Add geolocate control to the map.
+map2.addControl(new mapboxgl.GeolocateControl());
+
+// Add zoom and rotation controls to the map.
+map2.addControl(new mapboxgl.NavigationControl());
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([-122.41926460000002, 37.7792597])
+    .setHTML('San Francisco City Hall  © ARTADYS')
+    .addTo(map2);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3439, 48.8675])
+    .setHTML('75002 !')
+    .addTo(map2);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3591, 48.8634])
+    .setHTML('75003!')
+    .addTo(map2);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3582, 48.8534])
+    .setHTML('75004!')
+    .addTo(map2);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3518, 48.8434])
+    .setHTML('75005!')
+    .addTo(map2);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3354, 48.8488])
+    .setHTML('75006!')
+    .addTo(map2);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3134, 48.8543])
+    .setHTML('75007!')
+    .addTo(map2);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3176, 48.8718])
+    .setHTML('75008!')
+    .addTo(map2);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3379, 48.8790])
+    .setHTML('75009!')
+    .addTo(map2);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3622, 48.8788])
+    .setHTML('75010!')
+    .addTo(map2);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3811, 48.8579])
+    .setHTML('75011!')
+    .addTo(map2);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.4265, 48.8293])
+    .setHTML('75012!')
+    .addTo(map2);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3592, 48.8307])
+    .setHTML('75013!')
+    .addTo(map2);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3255, 48.8314])
+    .setHTML('75014!')
+    .addTo(map2);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.2927, 48.8421])
+    .setHTML('75015!')
+    .addTo(map2);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.2487, 48.8530])
+    .setHTML('75016!')
+    .addTo(map2);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3192, 48.8919])
+    .setHTML('75017!')
+    .addTo(map2);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3529, 48.8913])
+    .setHTML('75018!')
+    .addTo(map2);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3867, 48.8906])
+    .setHTML('75019!')
+    .addTo(map2);
+
+ var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.4066, 48.8599])
+    .setHTML('75020!')
+    .addTo(map2);   
+
+
+</script>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<center><h3><b>Cognitive City of Paris</b></h3></center>
+<br>
+
+ <meta charset='utf-8' />
+
+
+<div id='map'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiYXJ0YWR5cyIsImEiOiJjaXc3bmx4dHIwMDEzMnpteWd1ZDN1dHQwIn0.VSQbt4n08Oc4nUGtR5RcWQ';
+
+var map = new mapboxgl.Map({
+    container: 'map',
+    zoom: 14,
+    center: [2.3522219000000177, 48.85661400000001],
+    style: 'mapbox://styles/mapbox/satellite-v9',
+    hash: false
+});
+
+    map.addControl(new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken
+            }));
+map.addControl(new mapboxgl.FullscreenControl());
+
+// Add geolocate control to the map.
+map.addControl(new mapboxgl.GeolocateControl());
+
+// Add zoom and rotation controls to the map.
+map.addControl(new mapboxgl.NavigationControl());
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3310, 48.8640])
+    .setHTML('75001 !')
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3439, 48.8675])
+    .setHTML('75002 !')
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3591, 48.8634])
+    .setHTML('75003!')
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3582, 48.8534])
+    .setHTML('75004!')
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3518, 48.8434])
+    .setHTML('75005!')
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3354, 48.8488])
+    .setHTML('75006!')
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3134, 48.8543])
+    .setHTML('75007!')
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3176, 48.8718])
+    .setHTML('75008!')
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3379, 48.8790])
+    .setHTML('75009!')
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3622, 48.8788])
+    .setHTML('75010!')
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3811, 48.8579])
+    .setHTML('75011!')
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.4265, 48.8293])
+    .setHTML('75012!')
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3592, 48.8307])
+    .setHTML('75013!')
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3255, 48.8314])
+    .setHTML('75014!')
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.2927, 48.8421])
+    .setHTML('75015!')
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.2487, 48.8530])
+    .setHTML('75016!')
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3192, 48.8919])
+    .setHTML('75017!')
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3529, 48.8913])
+    .setHTML('75018!')
+    .addTo(map);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3867, 48.8906])
+    .setHTML('75019!')
+    .addTo(map);
+
+ var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.4066, 48.8599])
+    .setHTML('75020!')
+    .addTo(map);   
+
+
+</script>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+<center><h3><b>Cognitive City of London</b></h3></center>
+<br>
+
+ <meta charset='utf-8' />
+
+
+<div id='map3'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiYXJ0YWR5cyIsImEiOiJjaXc3bmx4dHIwMDEzMnpteWd1ZDN1dHQwIn0.VSQbt4n08Oc4nUGtR5RcWQ';
+
+var map3 = new mapboxgl.Map({
+    container: 'map3',
+    zoom: 17,
+    center: [-0.12775829999998223, 51.5073509],
+    style: 'mapbox://styles/mapbox/satellite-v9',
+    hash: false
+});
+
+    map3.addControl(new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken
+            }));
+map3.addControl(new mapboxgl.FullscreenControl());
+
+// Add geolocate control to the map.
+map3.addControl(new mapboxgl.GeolocateControl());
+
+// Add zoom and rotation controls to the map.
+map3.addControl(new mapboxgl.NavigationControl());
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([-0.12806899999998222, 51.508039])
+    .setHTML('Trafalgar Square, London © ARTADYS')
+    .addTo(map3);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3439, 48.8675])
+    .setHTML('75002 !')
+    .addTo(map3);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3591, 48.8634])
+    .setHTML('75003!')
+    .addTo(map3);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3582, 48.8534])
+    .setHTML('75004!')
+    .addTo(map3);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3518, 48.8434])
+    .setHTML('75005!')
+    .addTo(map3);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3354, 48.8488])
+    .setHTML('75006!')
+    .addTo(map3);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3134, 48.8543])
+    .setHTML('75007!')
+    .addTo(map3);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3176, 48.8718])
+    .setHTML('75008!')
+    .addTo(map3);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3379, 48.8790])
+    .setHTML('75009!')
+    .addTo(map3);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3622, 48.8788])
+    .setHTML('75010!')
+    .addTo(map3);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3811, 48.8579])
+    .setHTML('75011!')
+    .addTo(map3);
+
+</script>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+<center><h3><b>Cognitive City of New Delhi</b></h3></center>
+<br>
+
+ <meta charset='utf-8' />
+
+
+<div id='map4'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiYXJ0YWR5cyIsImEiOiJjaXc3bmx4dHIwMDEzMnpteWd1ZDN1dHQwIn0.VSQbt4n08Oc4nUGtR5RcWQ';
+
+var map4 = new mapboxgl.Map({
+    container: 'map4',
+    zoom: 13,
+    center: [77.20902120000005, 28.6139391],
+    style: 'mapbox://styles/mapbox/satellite-v9',
+    hash: false
+});
+
+    map4.addControl(new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken
+            }));
+map4.addControl(new mapboxgl.FullscreenControl());
+
+// Add geolocate control to the map.
+map4.addControl(new mapboxgl.GeolocateControl());
+
+// Add zoom and rotation controls to the map.
+map4.addControl(new mapboxgl.NavigationControl());
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([77.1923779, 28.577003])
+    .setHTML('City Hall New Delhi  © ARTADYS')
+    .addTo(map4);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3439, 48.8675])
+    .setHTML('75002 !')
+    .addTo(map4);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3591, 48.8634])
+    .setHTML('75003!')
+    .addTo(map4);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3582, 48.8534])
+    .setHTML('75004!')
+    .addTo(map4);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3518, 48.8434])
+    .setHTML('75005!')
+    .addTo(map4);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3354, 48.8488])
+    .setHTML('75006!')
+    .addTo(map4);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3134, 48.8543])
+    .setHTML('75007!')
+    .addTo(map4);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3176, 48.8718])
+    .setHTML('75008!')
+    .addTo(map4);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3379, 48.8790])
+    .setHTML('75009!')
+    .addTo(map4);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3622, 48.8788])
+    .setHTML('75010!')
+    .addTo(map4);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3811, 48.8579])
+    .setHTML('75011!')
+    .addTo(map4);
+    
+</script>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+<center><h3><b>Cognitive City of Perpignan, France</b></h3></center>
+<br>
+
+ <meta charset='utf-8' />
+
+
+<div id='map5'></div>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoiYXJ0YWR5cyIsImEiOiJjaXc3bmx4dHIwMDEzMnpteWd1ZDN1dHQwIn0.VSQbt4n08Oc4nUGtR5RcWQ';
+
+var map5 = new mapboxgl.Map({
+    container: 'map5',
+    zoom: 17,
+    center: [2.898873299999991, 42.6820428],
+    style: 'mapbox://styles/mapbox/satellite-v9',
+    hash: false
+});
+
+    map5.addControl(new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken
+            }));
+map5.addControl(new mapboxgl.FullscreenControl());
+
+// Add geolocate control to the map.
+map5.addControl(new mapboxgl.GeolocateControl());
+
+// Add zoom and rotation controls to the map.
+map5.addControl(new mapboxgl.NavigationControl());
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.898873299999991, 42.6820428])
+    .setHTML('Université Via Domitia, Perpignan © ARTADYS')
+    .addTo(map5);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3439, 48.8675])
+    .setHTML('75002 !')
+    .addTo(map5);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3591, 48.8634])
+    .setHTML('75003!')
+    .addTo(map5);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3582, 48.8534])
+    .setHTML('75004!')
+    .addTo(map5);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3518, 48.8434])
+    .setHTML('75005!')
+    .addTo(map5);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3354, 48.8488])
+    .setHTML('75006!')
+    .addTo(map5);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3134, 48.8543])
+    .setHTML('75007!')
+    .addTo(map5);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3176, 48.8718])
+    .setHTML('75008!')
+    .addTo(map5);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3379, 48.8790])
+    .setHTML('75009!')
+    .addTo(map5);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3622, 48.8788])
+    .setHTML('75010!')
+    .addTo(map5);
+
+var popup = new mapboxgl.Popup({closeOnClick: false})
+    .setLngLat([2.3811, 48.8579])
+    .setHTML('75011!')
+    .addTo(map5);
+
+</script>
+
+
+
+<!-- Hotjar Tracking Code for https://artadys.com -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:466785,hjsv:5};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'//static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+</body>
+
+
+{{outlet}}
+
+
